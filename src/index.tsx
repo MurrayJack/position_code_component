@@ -2,6 +2,7 @@ import * as React from "react";
 import { render } from "react-dom";
 import { PositionR } from "./PositionR";
 import { xPositions, yPositions, IResponseEvent } from "./PositionHelper";
+import { Box } from "./Helpers/Box";
 
 import "./styles.css";
 
@@ -11,6 +12,11 @@ export interface IAppState {
   SwapPosition: boolean;
   MoveXAxis: number;
   MoveYAxis: number;
+
+  FirstBoxSize: number;
+  SecondBoxSize: number;
+  GridHeight: number;
+  GridWidth: number;
 }
 
 class App extends React.Component<{}, IAppState> {
@@ -21,7 +27,12 @@ class App extends React.Component<{}, IAppState> {
     TryYPosition: "Bottom",
     SwapPosition: false,
     MoveXAxis: 0,
-    MoveYAxis: 0
+    MoveYAxis: 0,
+
+    FirstBoxSize: 20,
+    SecondBoxSize: 200,
+    GridHeight: 500,
+    GridWidth: 500
   };
 
   componentWillMount() {
@@ -67,16 +78,16 @@ class App extends React.Component<{}, IAppState> {
           <ul>
             <li>
               <label>Grid Size</label>
-              <input type="text" placeholder="Width" />
-              <input type="text" placeholder="Height" />
+              <input type="text" placeholder="Width (px)" value={this.state.GridWidth} />
+              <input type="text" placeholder="Height (px)" value={this.state.GridHeight} />
             </li>
             <li>
               <label>Box Size 1</label>
-              <input type="text" placeholder="Size" />
+              <input onChange={this.handleBoxSize1Change} type="text" placeholder="Size (px)" value={this.state.FirstBoxSize} />
             </li>
             <li>
               <label>Box Size 2</label>
-              <input type="text" placeholder="Size" />
+              <input type="text" placeholder="Size (px)" value={this.state.SecondBoxSize} />
             </li>
           </ul>
         </form>
@@ -88,8 +99,8 @@ class App extends React.Component<{}, IAppState> {
               TryXPosition={this.state.TryXPosition}
               TryYPosition={this.state.TryYPosition}
               SwapPosition={this.state.SwapPosition}
-              Fixed={() => <div className="fixed" />}
-              Dynamic={() => <div className="dynamic" />}
+              Fixed={() => <Box Size={this.state.FirstBoxSize} Color="#2980b9" />}
+              Dynamic={() => <Box Size={this.state.SecondBoxSize} Color="#d35400" />}
             />
           </div>
         </div>
@@ -101,27 +112,28 @@ class App extends React.Component<{}, IAppState> {
     console.log(e);
   };
 
+  handleBoxSize1Change = e => {
+    this.setState({ FirstBoxSize: e.target.value as any }, this.saveState);
+  };
+
   handleXMove = e => {
-    this.setState({ MoveXAxis: e.target.value as any });
+    this.setState({ MoveXAxis: e.target.value as any }, this.saveState);
   };
 
   handleYMove = e => {
-    this.setState({ MoveYAxis: e.target.value as any });
+    this.setState({ MoveYAxis: e.target.value as any }, this.saveState);
   };
 
   handleXChange = e => {
-    this.setState({ TryXPosition: e.target.value as any });
-    this.saveState();
+    this.setState({ TryXPosition: e.target.value as any }, this.saveState);
   };
 
   handleYChange = e => {
-    this.setState({ TryYPosition: e.target.value as any });
-    this.saveState();
+    this.setState({ TryYPosition: e.target.value as any }, this.saveState);
   };
 
   handleSwapPosition = e => {
-    this.setState({ SwapPosition: e.target.checked as any });
-    this.saveState();
+    this.setState({ SwapPosition: e.target.checked as any }, this.saveState);
   };
 
   saveState = () => {

@@ -7,7 +7,7 @@ export interface IPositionRProps {
   TryYPosition: yPositions;
   SwapPosition: boolean;
 
-  ContainerID: string;
+  ContainerID?: string;
   Fixed: () => JSX.Element;
   Dynamic: () => JSX.Element;
 
@@ -29,7 +29,7 @@ export class PositionR extends Component<IPositionRProps> {
   render() {
     return (
       <div style={{ position: "relative" }}>
-        <div style={{ display: "inline", lineHeight: 0 }} ref={e => (this.button = e)}>
+        <div style={{ display: "inline-block", lineHeight: 0 }} ref={e => (this.button = e)}>
           {this.props.Fixed()}
         </div>
         <div style={{ boxSizing: "border-box", lineHeight: 0, position: "absolute" }} ref={e => (this.drop = e)}>
