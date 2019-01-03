@@ -44,7 +44,9 @@ export const positionFix = (
   const OriginalTop = calcYAxis(tryYPosition, fixed, dynamic);
 
   if (changePosition) {
-    Left = tryXAxis(tryXPosition, fixed, dynamic);
+    const tryX = tryXAxis(tryXPosition, fixed, dynamic, container);
+
+    Left = tryX !== -1 ? tryX : OriginalLeft;
     Top = tryYAxis(tryYPosition, fixed, dynamic);
   } else {
     Left = OriginalLeft;
@@ -74,8 +76,18 @@ const calcXAxis = (tryXPosition: xPositions, fixed: IFixed, dynamic: IDynamic): 
   }
 };
 
-const tryXAxis = (tryXPosition: xPositions, fixed: IFixed, dynamic: IDynamic): number => {
-  return 0;
+const tryXAxis = (tryXPosition: xPositions, fixed: IFixed, dynamic: IDynamic, container: IContainer): number => {
+  if (tryXPosition === "Left") {
+    if (fixed.Left + dynamic.Width >= container.Width) {
+      return calcXAxis("Right", fixed, dynamic);
+    }
+  } else {
+    if (fixed.Left - dynamic.Width <= 0) {
+      return calcXAxis("Left", fixed, dynamic);
+    }
+  }
+
+  return -1;
 };
 
 const calcYAxis = (tryYPosition: yPositions, fixed: IFixed, dynamic: IDynamic): number => {
@@ -87,48 +99,5 @@ const calcYAxis = (tryYPosition: yPositions, fixed: IFixed, dynamic: IDynamic): 
 };
 
 const tryYAxis = (tryYPosition: yPositions, fixed: IFixed, dynamic: IDynamic): number => {
-  return 0;
+  return 20;
 };
-
-// const yAxisPos = (yPos, fixed, dynamic, container) => {
-//   let newPos = "";
-//   let top = 0;
-
-//   console.log(fixed.Top + fixed.Height + dynamic.Height);
-//   console.log(fixed.Top - dynamic.Height);
-//   console.log(container.Height);
-
-//   if (fixed.Top + fixed.Height + dynamic.Height >= container.Height) {
-//     newPos = "Top";
-//     top = dynamic.Height;
-//     console.log("Top");
-//   } else if (fixed.Top - dynamic.Height <= 0) {
-//     newPos = "Bottom";
-//     top = fixed.Height;
-//     console.log("Bottom");
-//   } else {
-//     console.log("y");
-//   }
-//   return {
-//     y: newPos,
-//     top: top
-//   };
-// };
-
-// const xAxisPos = (yPos, fixed, dynamic, container) => {
-//   let newPos = "";
-//   let left = 0;
-//   if (fixed.Left + dynamic.Width >= container.Width) {
-//     newPos = "Right";
-//     left = 0;
-//     console.log("Right");
-//   } else if (fixed.Left - dynamic.Width <= 0) {
-//     newPos = "Left";
-//     left = 0;
-//     console.log("Left");
-//   }
-//   return {
-//     x: newPos,
-//     left: left
-//   };
-// };

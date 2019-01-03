@@ -5,6 +5,7 @@ import { positionFix, xPositions, yPositions, IResponseEvent } from "./PositionH
 export interface IPositionRProps {
   TryXPosition: xPositions;
   TryYPosition: yPositions;
+  SwapPosition: boolean;
 
   Fixed: () => JSX.Element;
   Dynamic: () => JSX.Element;
@@ -47,7 +48,7 @@ export class PositionR extends Component<IPositionRProps> {
     const style = positionFix(
       this.props.TryXPosition,
       this.props.TryYPosition,
-      false,
+      this.props.SwapPosition,
       {
         Width: window.outerWidth,
         Height: window.outerHeight
