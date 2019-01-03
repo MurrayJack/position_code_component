@@ -85,7 +85,7 @@ const tryXAxis = (tryXPosition: xPositions, fixed: IFixed, dynamic: IDynamic, co
       return calcXAxis("Right", fixed, dynamic);
     }
   } else {
-    if (fixed.Left - dynamic.Width <= container.Left) {
+    if (fixed.Left - (dynamic.Width - fixed.Width) <= container.Left) {
       return calcXAxis("Left", fixed, dynamic);
     }
   }
@@ -107,7 +107,7 @@ const tryYAxis = (tryYPosition: yPositions, fixed: IFixed, dynamic: IDynamic, co
       return calcYAxis("Top", fixed, dynamic);
     }
   } else {
-    if (fixed.Top - dynamic.Height >= container.Top) {
+    if (fixed.Top - dynamic.Height <= container.Top) {
       return calcYAxis("Bottom", fixed, dynamic);
     }
   }

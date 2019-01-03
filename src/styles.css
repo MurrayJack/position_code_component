@@ -1,3 +1,11 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #bdc3c7;
+  color: #2c3e50;
+}
+
 .fixed {
   height: 20px;
   width: 20px;
@@ -10,6 +18,16 @@
   width: 200px;
   display: inline-block;
   background-color: deepskyblue;
+}
+
+form {
+  display: flex;
+  background-color: #ecf0f1;
+}
+
+form ul {
+  margin: 20px;
+  flex: 1 1 50%;
 }
 
 ul,
@@ -27,16 +45,36 @@ input {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+li {
+  min-height: 30px;
+}
+
 label {
   width: 100px;
   display: inline-block;
 }
 
 .container {
-  border: 1px solid deeppink;
   min-width: 500px;
   max-width: 500px;
   min-height: 500px;
   max-height: 500px;
-  margin: 0 auto;
+  margin: 50px auto;
+  background-color: white;
+}
+
+select,
+input[type="text"] {
+  width: 100px;
+  height: 25px;
+  border: 1px solid #d35400;
+  border-radius: 5px;
+  margin-right: 5px;
+  text-indent: 5px;
+}
+
+.grid {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }

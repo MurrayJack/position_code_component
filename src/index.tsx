@@ -33,39 +33,53 @@ class App extends React.Component<{}, IAppState> {
 
   render() {
     return (
-      <div>
-        <div>
-          <form>
-            <ul>
-              <li>
-                <label>Try X:</label>
-                <select onChange={this.handleXChange}>
-                  <option value="Left">Left</option>
-                  <option value="Right">Right</option>
-                </select>
-              </li>
-              <li>
-                <label>Try Y:</label>
-                <select onChange={this.handleYChange}>
-                  <option value="Top">Top</option>
-                  <option value="Bottom">Bottom</option>
-                </select>
-              </li>
-              <li>
-                <label>Swap Position</label>
-                <input onChange={this.handleSwapPosition} type="checkbox" checked={this.state.SwapPosition} />
-              </li>
-              <li>
-                <label>Move X Axis</label>
-                <input onChange={this.handleXMove} type="range" min={0} max={480} value={this.state.MoveXAxis} />
-              </li>
-              <li>
-                <label>Move Y Axis</label>
-                <input onChange={this.handleYMove} type="range" min={0} max={480} value={this.state.MoveYAxis} />
-              </li>
-            </ul>
-          </form>
-        </div>
+      <div className="grid">
+        <form>
+          <ul>
+            <li>
+              <label>Try X:</label>
+              <select onChange={this.handleXChange} value={this.state.TryXPosition}>
+                <option value="Left">Left</option>
+                <option value="Right">Right</option>
+              </select>
+            </li>
+            <li>
+              <label>Try Y:</label>
+              <select onChange={this.handleYChange} value={this.state.TryYPosition}>
+                <option value="Top">Top</option>
+                <option value="Bottom">Bottom</option>
+              </select>
+            </li>
+            <li>
+              <label>Swap Position</label>
+              <input onChange={this.handleSwapPosition} type="checkbox" checked={this.state.SwapPosition} />
+            </li>
+            <li>
+              <label>Move X Axis</label>
+              <input onChange={this.handleXMove} type="range" min={0} max={480} value={this.state.MoveXAxis} />
+            </li>
+            <li>
+              <label>Move Y Axis</label>
+              <input onChange={this.handleYMove} type="range" min={0} max={480} value={this.state.MoveYAxis} />
+            </li>
+          </ul>
+
+          <ul>
+            <li>
+              <label>Grid Size</label>
+              <input type="text" placeholder="Width" />
+              <input type="text" placeholder="Height" />
+            </li>
+            <li>
+              <label>Box Size 1</label>
+              <input type="text" placeholder="Size" />
+            </li>
+            <li>
+              <label>Box Size 2</label>
+              <input type="text" placeholder="Size" />
+            </li>
+          </ul>
+        </form>
         <div id="TesterID" className="container">
           <div style={{ marginTop: `${this.state.MoveYAxis}px`, marginLeft: `${this.state.MoveXAxis}px` }}>
             <PositionR
