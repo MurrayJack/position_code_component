@@ -31,3 +31,12 @@ label {
   width: 100px;
   display: inline-block;
 }
+
+.container {
+  border: 1px solid deeppink;
+  min-width: 500px;
+  max-width: 500px;
+  min-height: 500px;
+  max-height: 500px;
+  margin: 0 auto;
+}

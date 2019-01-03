@@ -7,6 +7,7 @@ export interface IPositionRProps {
   TryYPosition: yPositions;
   SwapPosition: boolean;
 
+  ContainerID: string;
   Fixed: () => JSX.Element;
   Dynamic: () => JSX.Element;
 
@@ -31,10 +32,7 @@ export class PositionR extends Component<IPositionRProps> {
         <div style={{ display: "inline", lineHeight: 0 }} ref={e => (this.button = e)}>
           {this.props.Fixed()}
         </div>
-        <div
-          style={{ boxSizing: "border-box", lineHeight: 0, position: "absolute" }}
-          ref={e => (this.drop = e)}
-        >
+        <div style={{ boxSizing: "border-box", lineHeight: 0, position: "absolute" }} ref={e => (this.drop = e)}>
           {this.props.Dynamic()}
         </div>
       </div>
@@ -44,14 +42,17 @@ export class PositionR extends Component<IPositionRProps> {
   setPosition() {
     const fixed = this.button.getBoundingClientRect();
     const dynamic = this.drop.getBoundingClientRect();
+    const container = document.getElementById(this.props.ContainerID).getBoundingClientRect();
 
     const style = positionFix(
       this.props.TryXPosition,
       this.props.TryYPosition,
       this.props.SwapPosition,
       {
-        Width: window.outerWidth,
-        Height: window.outerHeight
+        Width: container.width,
+        Height: container.height,
+        Left: container.left,
+        Top: container.top
       },
       {
         Top: fixed.top,

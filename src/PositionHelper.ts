@@ -2,8 +2,10 @@ export type xPositions = "Left" | "Right";
 export type yPositions = "Top" | "Bottom";
 
 export interface IContainer {
+  Top: number;
   Width: number;
   Height: number;
+  Left: number;
 }
 export interface IFixed {
   Top: number;
@@ -45,9 +47,10 @@ export const positionFix = (
 
   if (changePosition) {
     const tryX = tryXAxis(tryXPosition, fixed, dynamic, container);
+    const tryY = tryYAxis(tryYPosition, fixed, dynamic, container);
 
     Left = tryX !== -1 ? tryX : OriginalLeft;
-    Top = tryYAxis(tryYPosition, fixed, dynamic);
+    Top = tryY !== -1 ? tryY : OriginalTop;
   } else {
     Left = OriginalLeft;
     Top = OriginalTop;
@@ -78,11 +81,11 @@ const calcXAxis = (tryXPosition: xPositions, fixed: IFixed, dynamic: IDynamic): 
 
 const tryXAxis = (tryXPosition: xPositions, fixed: IFixed, dynamic: IDynamic, container: IContainer): number => {
   if (tryXPosition === "Left") {
-    if (fixed.Left + dynamic.Width >= container.Width) {
+    if (fixed.Left + dynamic.Width >= container.Left + container.Width) {
       return calcXAxis("Right", fixed, dynamic);
     }
   } else {
-    if (fixed.Left - dynamic.Width <= 0) {
+    if (fixed.Left - dynamic.Width <= container.Left) {
       return calcXAxis("Left", fixed, dynamic);
     }
   }
@@ -98,6 +101,16 @@ const calcYAxis = (tryYPosition: yPositions, fixed: IFixed, dynamic: IDynamic): 
   }
 };
 
-const tryYAxis = (tryYPosition: yPositions, fixed: IFixed, dynamic: IDynamic): number => {
-  return 20;
+const tryYAxis = (tryYPosition: yPositions, fixed: IFixed, dynamic: IDynamic, container: IContainer): number => {
+  if (tryYPosition === "Bottom") {
+    if (fixed.Top + fixed.Height + dynamic.Height >= container.Top + container.Height) {
+      return calcYAxis("Top", fixed, dynamic);
+    }
+  } else {
+    if (fixed.Top - dynamic.Height >= container.Top) {
+      return calcYAxis("Bottom", fixed, dynamic);
+    }
+  }
+
+  return -1;
 };
